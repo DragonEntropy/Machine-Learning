@@ -18,13 +18,21 @@ class Layer:
         self.epoch = epoch
         self.lr = self.base_lr * (1 - self.epoch / self.max_epochs)
 
+    def act_forward(self, inter):
+        return inter
+    
+    def act_backwards(self, errors):
+        return errors
+
     def forward(self, inputs):
         self.inputs = inputs
-        self.outputs = np.matmul(self.weights, self.inputs) + self.biases
+        inter = np.matmul(self.weights, self.inputs) + self.biases
+        self.outputs = self.act_forward(inter)
         return self.outputs
 
     def backward(self, errors):
-        weight_loss = np.outer(errors, self.inputs)
+        inter_loss = self.act_backwards(errors)
+        weight_loss = np.outer(inter_loss, self.inputs)
         bias_loss = errors
         prev_loss = np.matmul(self.weights.T, errors)
         self.weights -= self.lr * weight_loss
