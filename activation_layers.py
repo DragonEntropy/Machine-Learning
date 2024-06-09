@@ -1,7 +1,7 @@
 from layer import *
 
 class Sigmoid_Layer(Layer):
-    def __init__(self, prev_dim, layer_dim, max_epochs, base_lr=0.1):
+    def __init__(self, prev_dim, layer_dim, max_epochs, base_lr=0.5):
         super().__init__(prev_dim, layer_dim, max_epochs, base_lr)
 
     def act_forward(self, inter):

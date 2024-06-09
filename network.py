@@ -11,6 +11,9 @@ class Network:
         for layer in layer_types:
             self.layers.append(layer[0](layer[1], layer[2], epochs, lr))
 
+    def __repr__(self):
+        return "\n".join(f"{i + 1}.\n{layer.__repr__()}" for i, layer in enumerate(self.layers))
+
     def infer(self, point):
         result = point
         for layer in self.layers:
@@ -36,6 +39,3 @@ class Network:
                 correctness.append(int(np.argmax(result) == np.argmax(point[1])))
 
             print(f"Epoch {epoch + 1} accuracy: {sum(correctness)} / {len(data)}, total loss: {total_error}, synposis: {correctness}")
-
-        for layer in self.layers:
-            print(layer)
